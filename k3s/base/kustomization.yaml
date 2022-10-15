@@ -1,0 +1,4 @@
+namespace: img
+resources:
+  - nginx.yaml
+  - service.yml

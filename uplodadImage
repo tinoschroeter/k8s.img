@@ -1,0 +1,9 @@
+#!/bin/bash
+
+if [ -z "$1" ]; then
+  echo "Usage: $0 image.jpg"
+  exit 1
+fi
+
+pod=$(kubectl get pods -n img|tail -n1|awk '{ print $1}')
+kubectl cp $1 $pod:/usr/share/nginx/html -n img 2> /dev/null

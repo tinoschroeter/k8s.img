@@ -1,0 +1,49 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations: 
+  labels:
+    app: img-app
+  name: img-app
+  namespace: img
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: img-app
+  template:
+    metadata:
+      labels:
+        app: img-app
+    spec:
+      containers:
+      - name: img-app
+        image: nginx:1.14.2
+        envFrom:
+          - configMapRef:
+              name: config
+        resources:
+          requests:
+            memory: "300Mi"
+            cpu: "300m"
+          limits:
+            memory: "1024Mi"
+            cpu: "2200m"
+        volumeMounts:
+        - name: volv
+          mountPath: /usr/share/nginx/html
+        - name: nginx-conf
+          mountPath: /config/nginx/site-confs
+          readOnly: true
+        ports:
+        - containerPort: 80
+      volumes:
+      - name: volv
+        persistentVolumeClaim:
+          claimName: img-pvc
+      - name: nginx-conf
+        configMap:
+          name: config
+          items:
+            - key: nginx.conf
+              path: default
