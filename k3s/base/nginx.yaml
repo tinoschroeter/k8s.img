@@ -24,11 +24,11 @@ spec:
               name: config
         resources:
           requests:
-            memory: "300Mi"
-            cpu: "300m"
+            memory: "30Mi"
+            cpu: "30m"
           limits:
-            memory: "1024Mi"
-            cpu: "2200m"
+            memory: "124Mi"
+            cpu: "100m"
         volumeMounts:
         - name: volv
           mountPath: /usr/share/nginx/html
